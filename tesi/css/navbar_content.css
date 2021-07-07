@@ -9,7 +9,7 @@
   height: 100px;
 }
 .colore {
-  background-color: #838383;
+  background-color: black;
 }
 
 .sticky {
@@ -44,7 +44,7 @@
 }
 
 .menu_nasc li a:hover {
-  color: #838383;
+  color: #ce8806;
 }
 
 .menu_nasc li a {
@@ -89,7 +89,7 @@
 #navbar {
   position: relative;
   width: 100%;
-  border-bottom: 2px solid red;
+  border-bottom: 2px solid rgb(95, 94, 94);
   
 }
 
@@ -203,7 +203,7 @@ header a {
 
 header a:hover {
   text-decoration: none;
-  color: #303030;
+  color: #fa9715;
 }
 
 @media screen and (max-width: 996px) {

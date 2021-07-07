@@ -96,7 +96,7 @@
 #navbar.scroll {
   position: fixed;
   width: 100%;
-  height: 90px;
+  height: 100px;
   z-index: 5;
 }
 

@@ -14,7 +14,7 @@
   <?php require("header.php");
   ?>
   <div class="container-fluid bordo">
-    <div class="row">
+    <div class="row m-4">
       <div class="col-xs-6 col-md-3">
         <div class="middle">
 

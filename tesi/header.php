@@ -9,17 +9,17 @@
         </div>
 
         <ul class="menu_nasc d-lg-none">
-            <li><a href="shop.php">SHOP</a></li>
-            <li><a href="contatti.php">CONTATTI</a></li>
-            <li><a href="servizi.php">SERVIZI</a></li>
-            <li><a href="filosofia.php">FILOSOFIA</a></li>
+            <li><a href="risorseimpiegate.php">Risorse Impiegate</a></li>
+            <li><a href="contatti.php">Funzione2</a></li>
+            <li><a href="servizi.php">Funzione3</a></li>
+            <li><a href="filosofia.php">Funzione4</a></li>
         </ul>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul>
-                <li class=" "><a href="shop.php">SHOP</a></li>
-                <li class=" "><a href="contatti.php">CONTATTI</a></li>
-                <li class=""><a href="servizi.php">SERVIZI</a></li>
-                <li><a href="filosofia.php">FILOSOFIA</a></li>
+                <li class=" "><a href="shop.php">Funzione1</a></li>
+                <li class=" "><a href="contatti.php">Funzione2</a></li>
+                <li class=""><a href="servizi.php">Funzione3</a></li>
+                <li><a href="filosofia.php">Funzione4</a></li>
             </ul>
         </div>
 

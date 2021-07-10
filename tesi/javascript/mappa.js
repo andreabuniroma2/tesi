@@ -1,4 +1,5 @@
-
+import ReportingSquare from "./ReportingSquare"
+var p=new ReportingSquare(4,4,4,4);
 var polygonArrays = new Array();
 var altroTriangolo;
 var map;
@@ -35,6 +36,7 @@ function initMap() {
     polygonArrays[0].setMap(map);
 
 }
+console.log(p.lat)
 /*var intervalId = setInterval(function () {
     i = i + 2;
     var triangleCoords = [

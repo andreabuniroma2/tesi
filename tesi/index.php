@@ -7,7 +7,7 @@
   <link rel="stylesheet" type="text/css" href="css/slider.css">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
   <title>Add Map</title>
-  <script src="javascript/mappa.js"></script>
+  <script type="module" src="javascript/mappa.js"></script>
 </head>
 
 <body>

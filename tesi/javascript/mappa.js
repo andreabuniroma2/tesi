@@ -1,12 +1,9 @@
-import ReportingSquare from "./ReportingSquare"
-var p=new ReportingSquare(4,4,4,4);
-var polygonArrays = new Array();
-var altroTriangolo;
-var map;
-var i = 5;
-// Initialize and add the map
-function initMap() {
-    map = new google.maps.Map(document.getElementById("map"), {
+var polygonArrays=new Array;
+import {ReportingSquare} from "./ReportingSquare.js"
+var reportingSquare=new ReportingSquare(4,4,4,4);
+console.log(reportingSquare. createPolygon100m())
+window.initMap=function(){
+    var map = new google.maps.Map(document.getElementById("map"), {
         zoom: 5,
         center: { lat: 24.886, lng: -70.268 },
         mapTypeId: "roadmap",
@@ -34,9 +31,8 @@ function initMap() {
     });
     polygonArrays.push(bermudaTriangle);
     polygonArrays[0].setMap(map);
-
 }
-console.log(p.lat)
+// Initialize and add the map
 /*var intervalId = setInterval(function () {
     i = i + 2;
     var triangleCoords = [

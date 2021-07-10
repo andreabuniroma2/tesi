@@ -1,4 +1,6 @@
-class ReportingSquare {
+ class ReportingSquare {
+   lat
+   long
     color
     gravity
     constructor(lat, long,color,gravity) {
@@ -16,6 +18,8 @@ class ReportingSquare {
       }
     // Method
     createPolygon100m() {
+      return"ciccio";
     }
   }
+  export{ReportingSquare}
   

@@ -31,6 +31,7 @@
             </div>
           </div>
         </div>
+        <div id="bottone">clicca per </div>
       </div>
       <div class="col-xs-6 col-md-6">
         <div id="map"></div>
@@ -40,15 +41,15 @@
     </div>
   </div>
   <div class="container-fluid no-gutters" id="lanostrastoria">
-        <h3>la nostra storia</h3>
-        <div class="storia">
-            <img src="immagini/vigile.jpeg" alt="no_image">
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ut excepturi ratione fugiat voluptates quisquam autem soluta modi, est ad magnam cum quo nobis vero voluptas odit quae ullam! Necessitatibus, atque.
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ut excepturi ratione fugiat voluptates quisquam autem soluta modi, est ad magnam cum quo nobis vero voluptas odit quae ullam! Necessitatibus, atque.
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ut excepturi ratione fugiat voluptates quisquam autem soluta modi, est ad magnam cum quo nobis vero voluptas odit quae ullam! Necessitatibus, atque.
-            </p>
-        </div>
+    <h3>la nostra storia</h3>
+    <div class="storia">
+      <img src="immagini/vigile.jpeg" alt="no_image">
+      <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ut excepturi ratione fugiat voluptates quisquam autem soluta modi, est ad magnam cum quo nobis vero voluptas odit quae ullam! Necessitatibus, atque.
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ut excepturi ratione fugiat voluptates quisquam autem soluta modi, est ad magnam cum quo nobis vero voluptas odit quae ullam! Necessitatibus, atque.
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ut excepturi ratione fugiat voluptates quisquam autem soluta modi, est ad magnam cum quo nobis vero voluptas odit quae ullam! Necessitatibus, atque.
+      </p>
     </div>
+  </div>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCoJlELjVyZrWhf4_oUrYNkmz7Q-kCDToQ&callback=initMap&libraries=&v=weekly" async></script>
   <script src="javascript/geolocalisation.js"></script>
 </body>

@@ -2,20 +2,54 @@
   border-radius: 4px;
   box-sizing: border-box;
   height: 600px;
+  background-color: #303030;
   /* The height is 400 pixels */
   width: 100%;
   margin: auto;
+  z-index: 0;
   /* The width is the width of the web page */
 }
 
+/*bottone*/
+
+#bottone {
+ color: #fff;
+  /* colore del testo */
+   text-decoration: none;
+  /* eliminare la sottolineatura del testo */
+background: rgb(212, 75, 56);
+  /* sfondo del bottone */
+   padding: .7em 1.5em;
+  /* padding dal testo dal bordo del bottone */
+ outline: none;
+  /*  eliminare bordo*/
+ 
+}
+
+ #bottone:hover {
+  background: rgb(232, 95, 76);
+}
+
+/* cambio dello sfondo al passagio del mouse */
+
+#bottone:active {
+  background: rgb(152, 15, 0);
+}
+
+/* cambiare lo sfondo al premere bottone   */
+
+/*fine bottone*/
+
 .bordo {
-  margin-top:20px ;
+  margin-top: 20px;
 }
 
 body {
   color: rgb(95, 94, 94);
 }
+
 /* Parte della storia*/
+
 #lanostrastoria {
   margin-bottom: 20px;
 }
@@ -69,4 +103,5 @@ body {
     font-size: 1.5vw;
   }
 }
+
 /* Fine parte della storia*/

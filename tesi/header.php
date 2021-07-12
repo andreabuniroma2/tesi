@@ -16,7 +16,7 @@
         </ul>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul>
-                <li class=" "><a href="shop.php">Funzione1</a></li>
+                <li class=" "><a href="shop.php">Risorse Impiegate</a></li>
                 <li class=" "><a href="contatti.php">Funzione2</a></li>
                 <li class=""><a href="servizi.php">Funzione3</a></li>
                 <li><a href="filosofia.php">Funzione4</a></li>

@@ -1,30 +1,45 @@
 import { ReportingSquare } from "./ReportingSquare.js"
+var map;
+var myJsonArr;
+var objectReportingArray=new Array();
+var coordinateAttuali;
 window.initMap = function () {
-    var map = new google.maps.Map(document.getElementById("map"), {
+     map = new google.maps.Map(document.getElementById("map"), {
         zoom: 5,
-        center: {
-            lat: 41.70953628783216, lng:12.68639411940627
-        },
         mapTypeId: "roadmap",
     });
-    var reportingSquare=new ReportingSquare(41.70953628783216,12.68639411940627);
-    reportingSquare.createCircle1km().setMap(map);
+    getLocation();
 };
 window.onload=function(){
     var bottoneDiProva=document.getElementById("bottone");
     bottoneDiProva.addEventListener("click", bottoneCliccato);
-
+    // visualizzare tutti gli incendi nella zona //
 };
 function bottoneCliccato(){
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
            // Typical action to be performed when the document is ready:
-           var myArr = JSON.parse(this.responseText);
-           console.log("sei qio");
-           console.log(myArr);
+           myJsonArr = JSON.parse(this.responseText);
+           visualizzareInMappa();
         }
     };
-    xhttp.open("GET", "http://localhost:8080/TesiRivelazioneIncendi/ProvaJDBC", true);
+    xhttp.open("GET", "http://localhost:8080/TesiRivelazioneIncendi/Incendi", true);
     xhttp.send();
+  
+}
+function visualizzareInMappa(){
+    var reportingSquare=new ReportingSquare(parseFloat(myJsonArr.latitudine),parseFloat(myJsonArr.longitudine));
+    reportingSquare.createCircle1km().setMap(map);
+}
+function getLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(setCenterMap);
+    } else { 
+     console.log("error")
+    }
+  } 
+function setCenterMap(position){
+    map.setCenter(new google.maps.LatLng(position.coords.latitude,position.coords.longitude));
+
 }

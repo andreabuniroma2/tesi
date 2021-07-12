@@ -44,11 +44,28 @@ function setCenterMap(position){
     map.setCenter(new google.maps.LatLng(position.coords.latitude,position.coords.longitude));
 
 }
+//ritroveremo gli oggetti json da aggiungere e da eliminare che poi dovranno essere stmpati od eliminati()
 function provaDelControlIF(){
-    var json1=JSON.parse('[{"ip":35},{"ip":55}]');
-    var json2=JSON.parse('[{"ip":45},{"ip":55},{"ip":57}]');
-    var differencies=controlIfJSONChanged(json1,json2);
-    console.log(JSON.stringify(differencies));
+    var elementiDaAggiungereJSON=JSON.parse("[]");
+    var elementiDaEliminareJSON=JSON.parse("[]");
+    var jsonDiPartenza=JSON.parse(['[{"ip":45},{"ip":55},{"ip":67}]']);
+    var jsonArrivato=JSON.parse('[{"ip":45},{"ip":55},{"ip":57}]');
+    var elementiDaAggiugereObject=controlIfJSONChanged(jsonDiPartenza,jsonArrivato);
+    var elementiDaEliminareObject=controlIfJSONChanged(jsonArrivato,jsonDiPartenza);
+    for(var item in elementiDaAggiugereObject){
+        var itemStringfy=JSON.stringify(elementiDaAggiugereObject[item]);
+        if(itemStringfy!="{}"){
+            elementiDaAggiungereJSON.push(JSON.parse(itemStringfy))   
+        }
+    }
+    for(var item in elementiDaEliminareObject){
+        var itemStringfy=JSON.stringify(elementiDaEliminareObject[item]);
+        if(itemStringfy!="{}"){
+           elementiDaEliminareJSON.push(JSON.parse(itemStringfy));   
+        }
+    }
+    console.log(elementiDaAggiungereJSON);
+    console.log(elementiDaEliminareJSON);
 }
 function controlIfJSONChanged(obj1, obj2){
     const result = {};
@@ -60,7 +77,7 @@ function controlIfJSONChanged(obj1, obj2){
     }
     Object.keys(obj1 || {}).concat(Object.keys(obj2 || {})).forEach(key => {
         if(obj2[key] !== obj1[key] && !Object.is(obj1[key], obj2[key])) {
-            result[key] = obj2[key];
+            result[key]=obj2[key];
         }
         if(typeof obj2[key] === 'object' && typeof obj1[key] === 'object') {
             const value = controlIfJSONChanged(obj1[key], obj2[key]);

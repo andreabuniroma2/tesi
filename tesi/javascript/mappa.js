@@ -13,6 +13,7 @@ window.initMap = function () {
 window.onload=function(){
     var bottoneDiProva=document.getElementById("bottone");
     bottoneDiProva.addEventListener("click", bottoneCliccato);
+    provaDelControlIF();
     // visualizzare tutti gli incendi nella zona //
 };
 function bottoneCliccato(){
@@ -42,4 +43,31 @@ function getLocation() {
 function setCenterMap(position){
     map.setCenter(new google.maps.LatLng(position.coords.latitude,position.coords.longitude));
 
+}
+function provaDelControlIF(){
+    var json1=JSON.parse('[{"ip":35},{"ip":55}]');
+    var json2=JSON.parse('[{"ip":45},{"ip":55},{"ip":57}]');
+    var differencies=controlIfJSONChanged(json1,json2);
+    console.log(JSON.stringify(differencies));
+}
+function controlIfJSONChanged(obj1, obj2){
+    const result = {};
+    if (Object.is(obj1, obj2)) {
+        return undefined;
+    }
+    if (!obj2 || typeof obj2 !== 'object') {
+        return obj2;
+    }
+    Object.keys(obj1 || {}).concat(Object.keys(obj2 || {})).forEach(key => {
+        if(obj2[key] !== obj1[key] && !Object.is(obj1[key], obj2[key])) {
+            result[key] = obj2[key];
+        }
+        if(typeof obj2[key] === 'object' && typeof obj1[key] === 'object') {
+            const value = controlIfJSONChanged(obj1[key], obj2[key]);
+            if (value !== undefined) {
+                result[key] = value;
+            }
+        }
+    });
+    return result;
 }

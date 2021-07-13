@@ -1,5 +1,6 @@
 import { ReportingSquare } from "./ReportingSquare.js"
-import { ConstructUrl } from "./ConstructURL.js"
+import { ConstructUrlòolj
+ } from "./ConstructURL.js"
 var map;
 var myJsonArr;
 var objectReportingArray=new Array();
@@ -28,7 +29,7 @@ function bottoneCliccato(){
            visualizzareInMappa();
         }
     };
-    xhttp.open("GET", "http://localhost:8080/TesiRivelazioneIncendi/Incendi", true);
+    xhttp.open("GET", ConstructUrl.constructURLForReaserchProva, true);
     xhttp.send();
   
 }

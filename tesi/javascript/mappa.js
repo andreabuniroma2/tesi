@@ -1,8 +1,10 @@
 import { ReportingSquare } from "./ReportingSquare.js"
+import { ConstructUrl } from "./ConstructURL.js"
 var map;
 var myJsonArr;
 var objectReportingArray=new Array();
-var coordinateAttuali;
+var actualLatitude;
+var actualLongitude;
 window.initMap = function () {
      map = new google.maps.Map(document.getElementById("map"), {
         zoom: 5,
@@ -13,7 +15,8 @@ window.initMap = function () {
 window.onload=function(){
     var bottoneDiProva=document.getElementById("bottone");
     bottoneDiProva.addEventListener("click", bottoneCliccato);
-    provaDelControlIF();
+    actualLatitude=localStorage.getItem("latitude");
+    actualLongitude=localStorage.getItem("longitude")
     // visualizzare tutti gli incendi nella zona //
 };
 function bottoneCliccato(){
@@ -29,6 +32,19 @@ function bottoneCliccato(){
     xhttp.send();
   
 }
+function firstLaunch(latitude,longitude,distance){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+           // Typical action to be performed when the document is ready:
+           myJsonArr = JSON.parse(this.responseText);
+           visualizzareInMappa();
+        }
+    };
+    xhttp.open("GET", "http://localhost:8080/TesiRivelazioneIncendi/Incendi?latitudine=&longitudine=&distanza=", true);
+    xhttp.send();
+  
+}
 function visualizzareInMappa(){
     var reportingSquare=new ReportingSquare(parseFloat(myJsonArr.latitudine),parseFloat(myJsonArr.longitudine));
     reportingSquare.createCircle1km().setMap(map);
@@ -41,6 +57,8 @@ function getLocation() {
     }
   } 
 function setCenterMap(position){
+    localStorage.setItem('latitude',position.coords.latitude);
+    localStorage.setItem('longitude',position.coords.longitude);
     map.setCenter(new google.maps.LatLng(position.coords.latitude,position.coords.longitude));
 
 }

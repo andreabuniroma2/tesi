@@ -16,20 +16,10 @@
   <div class="container-fluid bordo">
     <div class="row m-4">
       <div class="col-xs-6 col-md-3">
-        <div class="middle">
-
-          <div class="blocco_slider">
-            <div class="multi-range-slider">
-              <input type="range" id="input-left" min="1200" max="4000" value="1200" onchange="change(strumento)">
-              <input type="range" id="input-right" min="1200" max="4000" value="4000" onchange="change(strumento)">
-              <div class="slider">
-                <div class="track"></div>
-                <div class="range"></div>
-                <div class="thumb left"></div>
-                <div class="thumb right"></div>
-              </div>
-            </div>
-          </div>
+        <div class="slidecontainer">
+          <p>Custom range slider:</p>
+          <input type="range" min="1" max="500" value="0" class="slider" id="myRange">
+          <p id="demo"></p>
         </div>
         <div id="bottone">clicca per </div>
       </div>

@@ -1,11 +1,12 @@
 import { ReportingSquare } from "./ReportingSquare.js"
-import { ConstructUrlòolj
- } from "./ConstructURL.js"
+import { ConstructUrl} from "./ConstructURL.js"
 var map;
 var myJsonArr;
 var objectReportingArray=new Array();
 var actualLatitude;
 var actualLongitude;
+var slider;
+var output;
 window.initMap = function () {
      map = new google.maps.Map(document.getElementById("map"), {
         zoom: 5,
@@ -15,6 +16,8 @@ window.initMap = function () {
 };
 window.onload=function(){
     var bottoneDiProva=document.getElementById("bottone");
+    slider=document.getElementById("myRange");
+    output=document.getElementById("demo");
     bottoneDiProva.addEventListener("click", bottoneCliccato);
     actualLatitude=localStorage.getItem("latitude");
     actualLongitude=localStorage.getItem("longitude")
@@ -29,7 +32,7 @@ function bottoneCliccato(){
            visualizzareInMappa();
         }
     };
-    xhttp.open("GET", ConstructUrl.constructURLForReaserchProva, true);
+    xhttp.open("GET", ConstructUrl.constructURLForReaserchProva(), true);
     xhttp.send();
   
 }
@@ -107,3 +110,5 @@ function controlIfJSONChanged(obj1, obj2){
     });
     return result;
 }
+/*parte della gestione dello slider*/
+/*fine parte gestione dello slider*/

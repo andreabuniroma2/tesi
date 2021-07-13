@@ -15,8 +15,6 @@ window.initMap = function () {
     getLocation();
 };
 window.onload=function(){
-    var bottoneDiProva=document.getElementById("bottone");
-    bottoneDiProva.addEventListener("click", bottoneCliccato);
     actualLatitude=localStorage.getItem("latitude");
     actualLongitude=localStorage.getItem("longitude");
     /*Parte slider*/
@@ -24,25 +22,15 @@ window.onload=function(){
     output=document.getElementById("demo");
     slider.addEventListener("mouseup", function () {
        console.log("hai alzato il mouse "+slider.value);
-       richiestaHTTPConDistanza(actualLatitude,actualLongitude,distance);
+       richiestaHTTPConDistanza(actualLatitude,actualLongitude,slider.value);
        //qui andremo a fare una ricerca passando come valori distanza e coordinate
     });
+    slider.oninput=function(){
+        output.innerHTML=slider.value;
+    }
     /*Fine parte slider*/
     
 };
-function bottoneCliccato(){
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-           // Typical action to be performed when the document is ready:
-           myJsonArr = JSON.parse(this.responseText);
-           visualizzareInMappa();
-        }
-    };
-    xhttp.open("GET", ConstructUrl.constructURLForReaserchProva(), true);
-    xhttp.send();
-  
-}
 function richiestaHTTPConDistanza(latitude,longitude,distance){
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {

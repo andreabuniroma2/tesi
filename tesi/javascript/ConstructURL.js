@@ -1,4 +1,5 @@
 class ConstructUrl{
+    lastResearch;
     static constructURLForReaserchProva(){
         return"http://localhost:8080/TesiRivelazioneIncendi/RicercaPerDistanza";
     }

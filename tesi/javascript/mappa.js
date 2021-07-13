@@ -16,12 +16,19 @@ window.initMap = function () {
 };
 window.onload=function(){
     var bottoneDiProva=document.getElementById("bottone");
-    slider=document.getElementById("myRange");
-    output=document.getElementById("demo");
     bottoneDiProva.addEventListener("click", bottoneCliccato);
     actualLatitude=localStorage.getItem("latitude");
-    actualLongitude=localStorage.getItem("longitude")
-    // visualizzare tutti gli incendi nella zona //
+    actualLongitude=localStorage.getItem("longitude");
+    /*Parte slider*/
+    slider=document.getElementById("myRange");
+    output=document.getElementById("demo");
+    slider.addEventListener("mouseup", function () {
+       console.log("hai alzato il mouse "+slider.value);
+       richiestaHTTPConDistanza(actualLatitude,actualLongitude,distance);
+       //qui andremo a fare una ricerca passando come valori distanza e coordinate
+    });
+    /*Fine parte slider*/
+    
 };
 function bottoneCliccato(){
     var xhttp = new XMLHttpRequest();
@@ -36,7 +43,7 @@ function bottoneCliccato(){
     xhttp.send();
   
 }
-function firstLaunch(latitude,longitude,distance){
+function richiestaHTTPConDistanza(latitude,longitude,distance){
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -45,7 +52,7 @@ function firstLaunch(latitude,longitude,distance){
            visualizzareInMappa();
         }
     };
-    xhttp.open("GET", "http://localhost:8080/TesiRivelazioneIncendi/Incendi?latitudine=&longitudine=&distanza=", true);
+    xhttp.open("GET",ConstructUrl.constructURLForReaserchWDistance(latitude,longitude,distance), true);
     xhttp.send();
   
 }

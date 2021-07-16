@@ -21,7 +21,26 @@
           <input type="range" min="1" max="500" value="0" class="slider" id="myRange">
           <p id="demo"></p>
         </div>
-        <div id="bottone">clicca per </div>
+        <!-- selettori regione-->
+        <div id="bottone">Cambio criteri ricerca</div>
+        <select name="slct" id="slct">
+          <option selected disabled>Choose an option</option>
+          <option value="1">Pure CSS</option>
+          <option value="2">No JS</option>
+          <option value="3">Nice!</option>
+        </select>
+        <select name="slct" id="selettoreProvincia">
+          <option selected disabled>Choose an option</option>
+          <option value="1">Pure CSS</option>
+          <option value="2">No JS</option>
+          <option value="3">Nice!</option>
+        </select>
+        <select name="slct" id="selettoreComune">
+          <option selected disabled>Choose an option</option>
+          <option value="1">Pure CSS</option>
+          <option value="2">No JS</option>
+          <option value="3">Nice!</option>
+        </select>
       </div>
       <div class="col-xs-6 col-md-6">
         <div id="map"></div>

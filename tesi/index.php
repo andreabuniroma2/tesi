@@ -5,9 +5,13 @@
   <link rel="stylesheet" type="text/css" href="css/indexStyle.css">
   <link rel="stylesheet" type="text/css" href="css/navbar_content.css">
   <link rel="stylesheet" type="text/css" href="css/slider.css">
+
+  <link rel="stylesheet" type="text/css" href="css/select.css">
+
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
   <title>Add Map</title>
   <script type="module" src="javascript/mappa.js"></script>
+
 </head>
 
 <body>
@@ -23,24 +27,23 @@
         </div>
         <!-- selettori regione-->
         <div id="bottone">Cambio criteri ricerca</div>
-        <select name="slct" id="slct">
-          <option selected disabled>Choose an option</option>
-          <option value="1">Pure CSS</option>
-          <option value="2">No JS</option>
-          <option value="3">Nice!</option>
-        </select>
-        <select name="slct" id="selettoreProvincia">
-          <option selected disabled>Choose an option</option>
-          <option value="1">Pure CSS</option>
-          <option value="2">No JS</option>
-          <option value="3">Nice!</option>
-        </select>
-        <select name="slct" id="selettoreComune">
-          <option selected disabled>Choose an option</option>
-          <option value="1">Pure CSS</option>
-          <option value="2">No JS</option>
-          <option value="3">Nice!</option>
-        </select>
+        <h1>Pure CSS Select</h1>
+        <div class="select m-1">
+          <select name="slct" id="regione">
+            <option selected disabled>Choose an option</option>
+            <?php require("selectorRegioni.php") ?>
+          </select>
+        </div>
+        <div class="select m-1">
+          <select name="slct" id="provincia">
+            <option selected disabled>Choose an option</option>
+          </select>
+        </div>
+        <div class="select m-1">
+          <select name="slct" id="comune">
+            <option selected disabled>Choose an option</option>
+          </select>
+        </div>
       </div>
       <div class="col-xs-6 col-md-6">
         <div id="map"></div>

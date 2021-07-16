@@ -19,14 +19,11 @@ class ConstructUrl {
 
     }
     /**soltanto il ritorno delle liste delle regioni,comuni.province */
-    static constructURLForFindRegions() {
-        return "http://localhost:8080/TesiRivelazioneIncendi/RicercaInItalia?tipo=regione";
+    static constructURLForFindProvinces(codiceRegione) {
+        return "http://localhost:8080/TesiRivelazioneIncendi/RicercaInItalia?tipo=provincia&id=" + codiceRegione;
     }
-    static constructURLForFindProvinces(zona) {
-        return "http://localhost:8080/TesiRivelazioneIncendi/RicercaInItalia?tipo=provincia&zona=" + zona;
-    }
-    static constructURLForFindComunes(zona) {
-        return "http://localhost:8080/TesiRivelazioneIncendi/RicercaInItalia?tipo=comune&zona=" + zona;
+    static constructURLForFindComunes(codiceProvincia) {
+        return "http://localhost:8080/TesiRivelazioneIncendi/RicercaInItalia?tipo=comune&id=" + codiceProvincia;
     }
 
 }

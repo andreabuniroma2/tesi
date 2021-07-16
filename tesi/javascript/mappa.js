@@ -125,9 +125,10 @@ function regioneSelezionata() {
     opt.value = 'option value';
     // add opt to end of select box (sel)
     selettoreProvincia.appendChild(opt);*/
-    console.log(richiestaRegioni("regioni"));
+    richiestaProvinceComuni("province",selettoreRegione.value);
 }
 function provinciaSelezionata() {
+    richiestaProvinceComuni("comuni",selettoreProvincia.value);
 
 }
 function comuneSelezionato() {
@@ -138,30 +139,29 @@ function cercaPerSelettori() {
 
 }
 /**richiesta http per la selezione del posto */
-function richiestaRegioni(tipoDiRicerca, zona) {
+function richiestaProvinceComuni(tipoDiRicerca, codice) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             // Typical action to be performed when the document is ready:
-            //var listaPosti = JSON.parse(this.responseText);
-            
-            console.log(this.response);
+            var listaPosti = JSON.parse(this.responseText);
+            changeSelectors(tipoDiRicerca,listaPosti);
         }
     };
     switch (tipoDiRicerca) {
-        case 'regioni':
-            xhttp.open("GET", ConstructUrl.constructURLForFindRegions(), true);
-            xhttp.send();
-            break;
         case 'provincie':
-            xhttp.open("GET", ConstructUrl.constructURLForFindProvinces(zona), true);
+            xhttp.open("GET", ConstructUrl.constructURLForFindProvinces(codice), true);
             xhttp.send();
             break;
         case 'comuni':
-            xhttp.open("GET", ConstructUrl.constructURLForFindComunes(comuni), true);
+            xhttp.open("GET", ConstructUrl.constructURLForFindComunes(codice), true);
             xhttp.send();
             break;
 
     }
+}
+function changeSelectors(tipoDiRicerca,listaPosti){
+    console.log(listaPosti);
+
 }
 /**fine parte regione provincia comune */

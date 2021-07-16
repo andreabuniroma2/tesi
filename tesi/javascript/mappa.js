@@ -118,13 +118,14 @@ function controlIfJSONChanged(obj1, obj2) {
 /*fine parte gestione dello slider*/
 /*Inizio parte funzioni Ricerca per regione,provincia, comune */
 function regioneSelezionata() {
-    var opt = document.createElement('option');
+    /*var opt = document.createElement('option');
     // create text node to add to option element (opt)
     opt.appendChild(document.createTextNode('New Option Text'));
     // set value property of opt
     opt.value = 'option value';
     // add opt to end of select box (sel)
-    selettoreProvincia.appendChild(opt);
+    selettoreProvincia.appendChild(opt);*/
+    console.log(richiestaRegioni("regioni"));
 }
 function provinciaSelezionata() {
 
@@ -137,44 +138,30 @@ function cercaPerSelettori() {
 
 }
 /**richiesta http per la selezione del posto */
-function richiestaRegioni(latitude, longitude, distance) {
+function richiestaRegioni(tipoDiRicerca, zona) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             // Typical action to be performed when the document is ready:
-            var listaPosti = JSON.parse(this.responseText);
-            return listaPosti;
+            //var listaPosti = JSON.parse(this.responseText);
+            
+            console.log(this.response);
         }
     };
-    xhttp.open("GET", ConstructUrl.constructURLForFindComunesFindRegions(),true);
-    xhttp.send();
+    switch (tipoDiRicerca) {
+        case 'regioni':
+            xhttp.open("GET", ConstructUrl.constructURLForFindRegions(), true);
+            xhttp.send();
+            break;
+        case 'provincie':
+            xhttp.open("GET", ConstructUrl.constructURLForFindProvinces(zona), true);
+            xhttp.send();
+            break;
+        case 'comuni':
+            xhttp.open("GET", ConstructUrl.constructURLForFindComunes(comuni), true);
+            xhttp.send();
+            break;
 
+    }
 }
-function richiestaProvince(zona) {
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            // Typical action to be performed when the document is ready:
-            var listaPosti = JSON.parse(this.responseText);
-            return listaPosti;
-        }
-    };
-    xhttp.open("GET", ConstructUrl.constructURLForFindProvinces(zona), true);
-    xhttp.send();
-
-}
-function richiestaComuni(zona) {
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            // Typical action to be performed when the document is ready:
-            var listaPosti = JSON.parse(this.responseText);
-            return listaPosti;
-        }
-    };
-    xhttp.open("GET", ConstructUrl.constructURLForFindComunes(zona), true);
-    xhttp.send();
-
-}
-
 /**fine parte regione provincia comune */

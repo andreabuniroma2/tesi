@@ -7,6 +7,10 @@ var actualLatitude;
 var actualLongitude;
 var slider;
 var output;
+var bottone;
+var divProvincia;
+var divComune;
+var divRegione;
 var selettoreRegione;
 var selettoreProvincia;
 var selettoreComune;
@@ -18,6 +22,13 @@ window.initMap = function () {
     getLocation();
 };
 window.onload = function () {
+    // cambio di criteri di ricerca
+    bottone=document.getElementById("bottone");
+    divProvincia=document.getElementById("divProvincia");
+    divRegione=document.getElementById("divRegione");
+    divComune=document.getElementById("divComune");
+    bottone.addEventListener("click",changeResearchParamters);
+    //fine cambio fi criteri di ricerca
     actualLatitude = localStorage.getItem("latitude");
     actualLongitude = localStorage.getItem("longitude");
     /*Parte slider*/
@@ -165,3 +176,15 @@ function changeSelectors(tipoDiRicerca,listaPosti){
 
 }
 /**fine parte regione provincia comune */
+// cambiare i parametri di ricerca
+function changeResearchParamters() {
+    console.log("stai cercando di cambiare i parametri");
+    if (selettoreRegione.style.display === "none") {
+        divRegione.style.display="block";
+        selettoreRegione.style.display = "block";
+    } else {
+        divRegione.style.display="none";
+        selettoreRegione.style.display = "none";
+    }
+  } 
+// fine cambio dei parametri di ricerca

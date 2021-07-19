@@ -28,18 +28,18 @@
         <!-- selettori regione-->
         <div id="bottone">Cambio criteri ricerca</div>
         <h1>Pure CSS Select</h1>
-        <div class="select m-1">
+        <div class="select m-1" id="divRegione">
           <select name="slct" id="regione">
             <option selected disabled>Choose an option</option>
             <?php require("selectorRegioni.php") ?>
           </select>
         </div>
-        <div class="select m-1">
+        <div class="select m-1" id="divProvincia">
           <select name="slct" id="provincia">
             <option selected disabled>Choose an option</option>
           </select>
         </div>
-        <div class="select m-1">
+        <div class="select m-1" id="divComune">
           <select name="slct" id="comune">
             <option selected disabled>Choose an option</option>
           </select>

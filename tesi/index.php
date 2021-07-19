@@ -27,21 +27,23 @@
         </div>
         <!-- selettori regione-->
         <div id="bottone">Cambio criteri ricerca</div>
-        <div class="select m-1" id="divRegione">
-          <select name="slct" id="regione">
-            <option selected disabled>Choose an option</option>
-            <?php require("selectorRegioni.php") ?>
-          </select>
-        </div>
-        <div class="select m-1" id="divProvincia">
-          <select name="slct" id="provincia">
-            <option selected disabled>Choose an option</option>
-          </select>
-        </div>
-        <div class="select m-1" id="divComune">
-          <select name="slct" id="comune">
-            <option selected disabled>Choose an option</option>
-          </select>
+        <div id="contenitoreDiv">
+          <div class="select m-1">
+            <select name="slct" id="regione">
+              <option selected disabled>Choose an option</option>
+              <?php require("selectorRegioni.php") ?>
+            </select>
+          </div>
+          <div class="select m-1" >
+            <select name="slct" id="provincia">
+              <option selected disabled>Choose an option</option>
+            </select>
+          </div>
+          <div class="select m-1">
+            <select name="slct" id="comune">
+              <option selected disabled>Choose an option</option>
+            </select>
+          </div>
         </div>
       </div>
       <div class="col-xs-6 col-md-6">

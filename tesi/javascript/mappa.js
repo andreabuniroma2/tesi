@@ -10,6 +10,7 @@ var output;
 var bottone;
 var divProvincia;
 var divComune;
+var contenitoreDiv;
 var divRegione;
 var selettoreRegione;
 var selettoreProvincia;
@@ -24,9 +25,6 @@ window.initMap = function () {
 window.onload = function () {
     // cambio di criteri di ricerca
     bottone = document.getElementById("bottone");
-    divProvincia = document.getElementById("divProvincia");
-    divRegione = document.getElementById("divRegione");
-    divComune = document.getElementById("divComune");
     bottone.addEventListener("click", changeResearchParamters);
     //fine cambio fi criteri di ricerca
     actualLatitude = localStorage.getItem("latitude");
@@ -44,6 +42,7 @@ window.onload = function () {
     }
     /*Fine parte slider*/
     /**Inizio Parte selettori */
+    contenitoreDiv=document.getElementById("contenitoreDiv");
     selettoreRegione = document.getElementById("regione");
     selettoreProvincia = document.getElementById("provincia");
     selettoreComune = document.getElementById("comune");
@@ -179,22 +178,11 @@ function changeSelectors(tipoDiRicerca, listaPosti) {
 // cambiare i parametri di ricerca
 function changeResearchParamters() {
     console.log("stai cercando di cambiare i parametri");
-    if (selettoreRegione.style.display === "none") {
-        divRegione.style.display = "block";
-        selettoreRegione.style.display = "block";
-        divComune.style.display = "block";
-        selettoreComune.style.display = "block";
-        divProvincia.style.display = "block";
-        selettoreProvincia.style.display = "block";
-        slider.style.display="none";
+    if (contenitoreDiv.style.display === "none") {
+        contenitoreDiv.style.display = "block";
     } else {
-        divRegione.style.display = "none";
-        selettoreRegione.style.display = "none";
-        divComune.style.display = "none";
-        selettoreComune.style.display = "none";
-        divProvincia.style.display = "none";
-        selettoreProvincia.style.display = "none";
-        slider.style.display="block";
+        contenitoreDiv.style.display = "none";
+   
 
     }
 }

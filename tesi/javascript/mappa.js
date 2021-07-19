@@ -23,11 +23,11 @@ window.initMap = function () {
 };
 window.onload = function () {
     // cambio di criteri di ricerca
-    bottone=document.getElementById("bottone");
-    divProvincia=document.getElementById("divProvincia");
-    divRegione=document.getElementById("divRegione");
-    divComune=document.getElementById("divComune");
-    bottone.addEventListener("click",changeResearchParamters);
+    bottone = document.getElementById("bottone");
+    divProvincia = document.getElementById("divProvincia");
+    divRegione = document.getElementById("divRegione");
+    divComune = document.getElementById("divComune");
+    bottone.addEventListener("click", changeResearchParamters);
     //fine cambio fi criteri di ricerca
     actualLatitude = localStorage.getItem("latitude");
     actualLongitude = localStorage.getItem("longitude");
@@ -136,10 +136,10 @@ function regioneSelezionata() {
     opt.value = 'option value';
     // add opt to end of select box (sel)
     selettoreProvincia.appendChild(opt);*/
-    richiestaProvinceComuni("province",selettoreRegione.value);
+    richiestaProvinceComuni("province", selettoreRegione.value);
 }
 function provinciaSelezionata() {
-    richiestaProvinceComuni("comuni",selettoreProvincia.value);
+    richiestaProvinceComuni("comuni", selettoreProvincia.value);
 
 }
 function comuneSelezionato() {
@@ -156,7 +156,7 @@ function richiestaProvinceComuni(tipoDiRicerca, codice) {
         if (this.readyState == 4 && this.status == 200) {
             // Typical action to be performed when the document is ready:
             var listaPosti = JSON.parse(this.responseText);
-            changeSelectors(tipoDiRicerca,listaPosti);
+            changeSelectors(tipoDiRicerca, listaPosti);
         }
     };
     switch (tipoDiRicerca) {
@@ -171,7 +171,7 @@ function richiestaProvinceComuni(tipoDiRicerca, codice) {
 
     }
 }
-function changeSelectors(tipoDiRicerca,listaPosti){
+function changeSelectors(tipoDiRicerca, listaPosti) {
     console.log(listaPosti);
 
 }
@@ -180,11 +180,22 @@ function changeSelectors(tipoDiRicerca,listaPosti){
 function changeResearchParamters() {
     console.log("stai cercando di cambiare i parametri");
     if (selettoreRegione.style.display === "none") {
-        divRegione.style.display="block";
+        divRegione.style.display = "block";
         selettoreRegione.style.display = "block";
+        divComune.style.display = "block";
+        selettoreComune.style.display = "block";
+        divProvincia.style.display = "block";
+        selettoreProvincia.style.display = "block";
+        slider.style.display="none";
     } else {
-        divRegione.style.display="none";
+        divRegione.style.display = "none";
         selettoreRegione.style.display = "none";
+        divComune.style.display = "none";
+        selettoreComune.style.display = "none";
+        divProvincia.style.display = "none";
+        selettoreProvincia.style.display = "none";
+        slider.style.display="block";
+
     }
-  } 
+}
 // fine cambio dei parametri di ricerca

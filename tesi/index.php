@@ -27,7 +27,6 @@
         </div>
         <!-- selettori regione-->
         <div id="bottone">Cambio criteri ricerca</div>
-        <h1>Pure CSS Select</h1>
         <div class="select m-1" id="divRegione">
           <select name="slct" id="regione">
             <option selected disabled>Choose an option</option>

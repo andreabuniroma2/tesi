@@ -42,11 +42,13 @@ window.onload = function () {
     }
     /*Fine parte slider*/
     /**Inizio Parte selettori */
-    contenitoreDiv=document.getElementById("contenitoreDiv");
+    contenitoreDiv = document.getElementById("contenitoreDiv");
     selettoreRegione = document.getElementById("regione");
     selettoreProvincia = document.getElementById("provincia");
     selettoreComune = document.getElementById("comune");
     selettoreRegione.addEventListener("change", regioneSelezionata);
+    selettoreProvincia.addEventListener("change", provinciaSelezionata);
+    selettoreComune.addEventListener("change", comuneSelezionato);
     /**FIne parte selettori */
 
 };
@@ -128,13 +130,6 @@ function controlIfJSONChanged(obj1, obj2) {
 /*fine parte gestione dello slider*/
 /*Inizio parte funzioni Ricerca per regione,provincia, comune */
 function regioneSelezionata() {
-    /*var opt = document.createElement('option');
-    // create text node to add to option element (opt)
-    opt.appendChild(document.createTextNode('New Option Text'));
-    // set value property of opt
-    opt.value = 'option value';
-    // add opt to end of select box (sel)
-    selettoreProvincia.appendChild(opt);*/
     richiestaProvinceComuni("province", selettoreRegione.value);
 }
 function provinciaSelezionata() {
@@ -142,6 +137,7 @@ function provinciaSelezionata() {
 
 }
 function comuneSelezionato() {
+    console.log(selettoreComune.value + " ");
     /**Qua vado a cercare gli incendi */
 
 }
@@ -155,11 +151,12 @@ function richiestaProvinceComuni(tipoDiRicerca, codice) {
         if (this.readyState == 4 && this.status == 200) {
             // Typical action to be performed when the document is ready:
             var listaPosti = JSON.parse(this.responseText);
+
             changeSelectors(tipoDiRicerca, listaPosti);
         }
     };
     switch (tipoDiRicerca) {
-        case 'provincie':
+        case 'province':
             xhttp.open("GET", ConstructUrl.constructURLForFindProvinces(codice), true);
             xhttp.send();
             break;
@@ -171,7 +168,34 @@ function richiestaProvinceComuni(tipoDiRicerca, codice) {
     }
 }
 function changeSelectors(tipoDiRicerca, listaPosti) {
-    console.log(listaPosti);
+
+    switch (tipoDiRicerca) {
+        case 'province':
+            selettoreProvincia.innerHTML = '';
+            for (let i in listaPosti) {
+                var opt = document.createElement('option');
+                // create text node to add to option element (opt)
+                opt.appendChild(document.createTextNode(listaPosti[i].nome));
+                // set value property of opt
+                opt.value = listaPosti[i].id;
+                // add opt to end of select box (sel)
+                selettoreProvincia.appendChild(opt);
+            }
+            break;
+        case 'comuni':
+            selettoreComune.innerHTML = '';
+            for (let i in listaPosti) {
+                var opt = document.createElement('option');
+                // create text node to add to option element (opt)
+                opt.appendChild(document.createTextNode(listaPosti[i].nome));
+                // set value property of opt
+                opt.value = listaPosti[i].nome;
+                // add opt to end of select box (sel)
+                selettoreComune.appendChild(opt);
+            }
+            break;
+
+    }
 
 }
 /**fine parte regione provincia comune */
@@ -182,8 +206,31 @@ function changeResearchParamters() {
         contenitoreDiv.style.display = "block";
     } else {
         contenitoreDiv.style.display = "none";
-   
+
 
     }
 }
 // fine cambio dei parametri di ricerca
+//ricerca incendi per comune
+function richiestaHTTPIncendiConComune(comune, gravity) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            // Typical action to be performed when the document is ready:
+            myJsonArr = JSON.parse(this.responseText);
+            visualizzareInMappa();
+        }
+    }
+    if (gravity == null) {
+        xhttp.open("GET", ConstructUrl.constructURLForComunes(comune), true);
+        xhttp.send();
+    }
+    else {
+        xhttp.open("GET", ConstructUrl.constructURLForComunes(comune, gravity), true);
+        xhttp.send();
+    }
+
+
+
+}
+// fine -- ricerca per comune

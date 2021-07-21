@@ -9,12 +9,25 @@ class ConstructUrl {
     static constructURLForReaserchWDistanceWGravity(latitude, longitude, distance, gravity) {
         return "http://localhost:8080/TesiRivelazioneIncendi/RicercaPerDistanza?latitude=" + latitude + "&longitude=" + longitude + "&distance=" + distance + "&gravity=" + gravity;
     }
-    static constructURLForRegion(region) {
-        return "http://localhost:8080/TesiRivelazioneIncendi/RicercaPerRegione?region=" + region;
-    }
-    static constructURLForRegionWGravity(region, gravity) {
+    static constructURLForRegions(region,gravity) {
+        if (gravity==null)
+        return  "http://localhost:8080/TesiRivelazioneIncendi/RicercaPerRegione?region=" + region;
+        else 
         return "http://localhost:8080/TesiRivelazioneIncendi/RicercaPerRegione?region=" + region + "&gravity=" + gravity;
     }
+    static constructURLForProvinces(province) {
+        if (gravity==null)
+        return  "http://localhost:8080/TesiRivelazioneIncendi/RicercaPerProvincia?province=" + province;
+        else 
+        return "http://localhost:8080/TesiRivelazioneIncendi/RicercaPerProvincia?province=" + province + "&gravity=" + gravity;
+    }
+    static constructURLForComunes(comune) {
+        if (gravity==null)
+        return  "http://localhost:8080/TesiRivelazioneIncendi/RicercaPerComune?comune=" + comune;
+        else 
+        return "http://localhost:8080/TesiRivelazioneIncendi/RicercaPerComune?comune=" + comune + "&gravity=" + gravity;
+    }
+
     static constructURLForResources() {
 
     }

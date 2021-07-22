@@ -2,6 +2,7 @@ import { ReportingSquare } from "./ReportingSquare.js"
 import { ConstructUrl } from "./ConstructURL.js"
 var maximumiLatitude;
 var macimumLongitude;
+var intervalID; //id per la creazione delle richieste in loop
 var infoWindow;
 var map;
 var myJsonArr;
@@ -114,6 +115,19 @@ function richiestaHTTPIncendiConComune(comune, gravity) {
 
 
 }
+function periodicalRequest(){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            // Typical action to be performed when the document is ready:
+            myJsonArr = JSON.parse(this.responseText);
+            visualizzareInMappa();
+        }
+    };
+    xhttp.open("GET", ConstructUrl.getLastReaserch(), true);
+    console.log("sei dentro la periodical Request e questa è l'ultima search : \n"+ConstructUrl.getLastReaserch());
+    xhttp.send();
+}
 //Fine Parti per le richieste
 function visualizzareInMappa() {
 
@@ -200,10 +214,9 @@ function provinciaSelezionata() {
 
 }
 function comuneSelezionato() {
-    console.log(selettoreComune.value + " ");
-    removeAllPolygons()
-    myJsonArr = null;
+    removeAllPolygons();
     richiestaHTTPIncendiConComune(selettoreComune.value, null);
+    intervalID=setInterval(periodicalRequest,5000);
     /**Qua vado a cercare gli incendi */
 
 }

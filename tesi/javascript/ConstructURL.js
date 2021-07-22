@@ -23,9 +23,9 @@ class ConstructUrl {
     }
     static constructURLForComunes(comune, gravity) {
         if (gravity == null)
-            return "http://localhost:8080/TesiRivelazioneIncendi/RicercaPerComune?comune=" + comune;
+            return this.lastResearch = "http://localhost:8080/TesiRivelazioneIncendi/RicercaPerComune?comune=" + comune;
         else
-            return "http://localhost:8080/TesiRivelazioneIncendi/RicercaPerComune?comune=" + comune + "&gravity=" + gravity;
+            return this.lastResearch = "http://localhost:8080/TesiRivelazioneIncendi/RicercaPerComune?comune=" + comune + "&gravity=" + gravity;
     }
 
     static constructURLForResources() {

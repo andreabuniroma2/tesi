@@ -121,6 +121,7 @@ function periodicalRequest(){
         if (this.readyState == 4 && this.status == 200) {
             // Typical action to be performed when the document is ready:
             myJsonArr = JSON.parse(this.responseText);
+            removeAllPolygons();
             visualizzareInMappa();
         }
     };
@@ -272,3 +273,4 @@ function removeAllPolygons() {
     objectReportingArray = [];
 
 }
+//implementare un ischanged in caso di vedere se è cambiato l'array degli oggettti restituiti e nel caso aggiornare la mappa 

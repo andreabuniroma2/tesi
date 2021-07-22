@@ -1,26 +1,27 @@
 import { ReportingSquare } from "./ReportingSquare.js"
 import { ConstructUrl } from "./ConstructURL.js"
+var maximumiLatitude;
+var macimumLongitude;
+var infoWindow;
 var map;
 var myJsonArr;
-var objectReportingArray = new Array();
+var objectReportingArray = [];
 var actualLatitude;
 var actualLongitude;
 var slider;
 var output;
 var bottone;
-var divProvincia;
-var divComune;
 var contenitoreDiv;
-var divRegione;
 var selettoreRegione;
 var selettoreProvincia;
 var selettoreComune;
 window.initMap = function () {
     map = new google.maps.Map(document.getElementById("map"), {
         zoom: 5,
-        mapTypeId: "roadmap",
+        mapTypeId: "terrain",
     });
     getLocation();
+    infoWindow = new google.maps.InfoWindow();
 };
 window.onload = function () {
     // cambio di criteri di ricerca
@@ -52,6 +53,7 @@ window.onload = function () {
     /**FIne parte selettori */
 
 };
+//Parti delle Richieste
 function richiestaHTTPConDistanza(latitude, longitude, distance) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
@@ -65,14 +67,69 @@ function richiestaHTTPConDistanza(latitude, longitude, distance) {
     xhttp.send();
 
 }
-function visualizzareInMappa() {
-    /*var reportingSquare = new ReportingSquare(parseFloat(myJsonArr.latitudine), parseFloat(myJsonArr.longitudine));
-    reportingSquare.createCircle1km().setMap(map);*/
-    if(myJsonArr.length==1){
+/**richiesta http per la selezione del posto */
+function richiestaProvinceComuni(tipoDiRicerca, codice) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            // Typical action to be performed when the document is ready:
+            var listaPosti = JSON.parse(this.responseText);
 
-    }else{
-        for(let item in myJsonArr)
-        console.log(item);
+            changeSelectors(tipoDiRicerca, listaPosti);
+        }
+    };
+    switch (tipoDiRicerca) {
+        case 'province':
+            xhttp.open("GET", ConstructUrl.constructURLForFindProvinces(codice), true);
+            xhttp.send();
+            break;
+        case 'comuni':
+            xhttp.open("GET", ConstructUrl.constructURLForFindComunes(codice), true);
+            xhttp.send();
+            break;
+
+    }
+}
+//ricerca incendi per comune
+function richiestaHTTPIncendiConComune(comune, gravity) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            // Typical action to be performed when the document is ready:
+            console.log(this.responseText);
+            myJsonArr = JSON.parse(this.responseText);
+            visualizzareInMappa();
+        }
+    }
+    if (gravity == null) {
+        xhttp.open("GET", ConstructUrl.constructURLForComunes(comune), true);
+        console.log(ConstructUrl.constructURLForComunes(comune));
+        xhttp.send();
+    }
+    else {
+        xhttp.open("GET", ConstructUrl.constructURLForComunes(comune, gravity), true);
+        xhttp.send();
+    }
+
+
+
+}
+//Fine Parti per le richieste
+function visualizzareInMappa() {
+
+    if (myJsonArr.length == 1) {
+        var reportingSquare = new ReportingSquare(parseFloat(myJsonArr.latitudine), parseFloat(myJsonArr.longitudine));
+        reportingSquare.createCircle1km().setMap(map);
+        objectReportingArray.push(reportingSquare);
+    } else if (myJsonArr.length > 1) {
+        for (let item in myJsonArr) {
+            var reportingSquare = new ReportingSquare(parseFloat(myJsonArr[item].latitudine), parseFloat(myJsonArr[item].longitudine));
+            var cerchio=reportingSquare.createCircle100m(map);
+            objectReportingArray.push(cerchio);
+        }
+    }
+    else {
+        console.log("nessun incendio")
     }
 }
 function getLocation() {
@@ -144,36 +201,13 @@ function provinciaSelezionata() {
 }
 function comuneSelezionato() {
     console.log(selettoreComune.value + " ");
-    richiestaHTTPIncendiConComune(selettoreComune.value,null);
+    removeAllPolygons()
+    myJsonArr = null;
+    richiestaHTTPIncendiConComune(selettoreComune.value, null);
     /**Qua vado a cercare gli incendi */
 
 }
-function cercaPerSelettori() {
 
-}
-/**richiesta http per la selezione del posto */
-function richiestaProvinceComuni(tipoDiRicerca, codice) {
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            // Typical action to be performed when the document is ready:
-            var listaPosti = JSON.parse(this.responseText);
-
-            changeSelectors(tipoDiRicerca, listaPosti);
-        }
-    };
-    switch (tipoDiRicerca) {
-        case 'province':
-            xhttp.open("GET", ConstructUrl.constructURLForFindProvinces(codice), true);
-            xhttp.send();
-            break;
-        case 'comuni':
-            xhttp.open("GET", ConstructUrl.constructURLForFindComunes(codice), true);
-            xhttp.send();
-            break;
-
-    }
-}
 function changeSelectors(tipoDiRicerca, listaPosti) {
 
     switch (tipoDiRicerca) {
@@ -218,28 +252,10 @@ function changeResearchParamters() {
     }
 }
 // fine cambio dei parametri di ricerca
-//ricerca incendi per comune
-function richiestaHTTPIncendiConComune(comune, gravity) {
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            // Typical action to be performed when the document is ready:
-            console.log(this.responseText);
-            myJsonArr=JSON.parse(this.responseText);
-            visualizzareInMappa();
-        }
+function removeAllPolygons() {
+    for (let item in objectReportingArray) {
+        objectReportingArray[item].setMap(null);
     }
-    if (gravity == null) {
-        xhttp.open("GET", ConstructUrl.constructURLForComunes(comune), true);
-        console.log(ConstructUrl.constructURLForComunes(comune));
-        xhttp.send();
-    }
-    else {
-        xhttp.open("GET", ConstructUrl.constructURLForComunes(comune, gravity), true);
-        xhttp.send();
-    }
-
-
+    objectReportingArray = [];
 
 }
-// fine -- ricerca per comune

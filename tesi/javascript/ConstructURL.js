@@ -1,27 +1,27 @@
 class ConstructUrl {
-    lastResearch;
+    static lastResearch;
     static constructURLForReaserchProva() {
-        return "http://localhost:8080/TesiRivelazioneIncendi/RicercaPerDistanza";
+        return this.lastResearch="http://localhost:8080/TesiRivelazioneIncendi/RicercaPerDistanza";
     }
     static constructURLForReaserchWDistance(latitude, longitude, distance) {
-        return "http://localhost:8080/TesiRivelazioneIncendi/RicercaPerDistanza?latitude=" + latitude + "&longitude=" + longitude + "&distance=" + distance;
+        return this.lastResearch="http://localhost:8080/TesiRivelazioneIncendi/RicercaPerDistanza?latitude=" + latitude + "&longitude=" + longitude + "&distance=" + distance;
     }
     static constructURLForReaserchWDistanceWGravity(latitude, longitude, distance, gravity) {
-        return "http://localhost:8080/TesiRivelazioneIncendi/RicercaPerDistanza?latitude=" + latitude + "&longitude=" + longitude + "&distance=" + distance + "&gravity=" + gravity;
+        return this.lastResearch="http://localhost:8080/TesiRivelazioneIncendi/RicercaPerDistanza?latitude=" + latitude + "&longitude=" + longitude + "&distance=" + distance + "&gravity=" + gravity;
     }
     static constructURLForRegions(region,gravity) {
         if (gravity==null)
-        return  "http://localhost:8080/TesiRivelazioneIncendi/RicercaPerRegione?region=" + region;
+        return this.lastResearch= "http://localhost:8080/TesiRivelazioneIncendi/RicercaPerRegione?region=" + region;
         else 
-        return "http://localhost:8080/TesiRivelazioneIncendi/RicercaPerRegione?region=" + region + "&gravity=" + gravity;
+        return this.lastResearch="http://localhost:8080/TesiRivelazioneIncendi/RicercaPerRegione?region=" + region + "&gravity=" + gravity;
     }
-    static constructURLForProvinces(province) {
+    static constructURLForProvinces(province,gravity) {
         if (gravity==null)
-        return  "http://localhost:8080/TesiRivelazioneIncendi/RicercaPerProvincia?province=" + province;
+        return this.lastResearch= "http://localhost:8080/TesiRivelazioneIncendi/RicercaPerProvincia?province=" + province;
         else 
-        return "http://localhost:8080/TesiRivelazioneIncendi/RicercaPerProvincia?province=" + province + "&gravity=" + gravity;
+        return this.lastResearch="http://localhost:8080/TesiRivelazioneIncendi/RicercaPerProvincia?province=" + province + "&gravity=" + gravity;
     }
-    static constructURLForComunes(comune) {
+    static constructURLForComunes(comune,gravity) {
         if (gravity==null)
         return  "http://localhost:8080/TesiRivelazioneIncendi/RicercaPerComune?comune=" + comune;
         else 

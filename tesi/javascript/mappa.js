@@ -66,8 +66,14 @@ function richiestaHTTPConDistanza(latitude, longitude, distance) {
 
 }
 function visualizzareInMappa() {
-    var reportingSquare = new ReportingSquare(parseFloat(myJsonArr.latitudine), parseFloat(myJsonArr.longitudine));
-    reportingSquare.createCircle1km().setMap(map);
+    /*var reportingSquare = new ReportingSquare(parseFloat(myJsonArr.latitudine), parseFloat(myJsonArr.longitudine));
+    reportingSquare.createCircle1km().setMap(map);*/
+    if(myJsonArr.length==1){
+
+    }else{
+        for(let item in myJsonArr)
+        console.log(item);
+    }
 }
 function getLocation() {
     if (navigator.geolocation) {
@@ -138,6 +144,7 @@ function provinciaSelezionata() {
 }
 function comuneSelezionato() {
     console.log(selettoreComune.value + " ");
+    richiestaHTTPIncendiConComune(selettoreComune.value,null);
     /**Qua vado a cercare gli incendi */
 
 }
@@ -217,12 +224,14 @@ function richiestaHTTPIncendiConComune(comune, gravity) {
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             // Typical action to be performed when the document is ready:
-            myJsonArr = JSON.parse(this.responseText);
+            console.log(this.responseText);
+            myJsonArr=JSON.parse(this.responseText);
             visualizzareInMappa();
         }
     }
     if (gravity == null) {
         xhttp.open("GET", ConstructUrl.constructURLForComunes(comune), true);
+        console.log(ConstructUrl.constructURLForComunes(comune));
         xhttp.send();
     }
     else {

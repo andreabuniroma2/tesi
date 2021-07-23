@@ -1,8 +1,5 @@
 class ConstructUrl {
     static lastResearch;
-    static constructURLForReaserchProva() {
-        return this.lastResearch = "http://localhost:8080/TesiRivelazioneIncendi/RicercaPerDistanza";
-    }
     static constructURLForReaserchWDistance(latitude, longitude, distance) {
         return this.lastResearch = "http://localhost:8080/TesiRivelazioneIncendi/RicercaPerDistanza?latitude=" + latitude + "&longitude=" + longitude + "&distance=" + distance;
     }

@@ -1,9 +1,7 @@
 import { ReportingSquare } from "./ReportingSquare.js"
 import { ConstructUrl } from "./ConstructURL.js"
-var maximumiLatitude;
-var macimumLongitude;
 var intervalID; //id per la creazione delle richieste in loop
-var infoWindow;
+var distanzaDaTe;
 var map;
 var myJsonArr;
 var objectReportingArray = [];
@@ -22,7 +20,6 @@ window.initMap = function () {
         mapTypeId: "terrain",
     });
     getLocation();
-    infoWindow = new google.maps.InfoWindow();
 };
 window.onload = function () {
     // cambio di criteri di ricerca
@@ -32,15 +29,18 @@ window.onload = function () {
     actualLatitude = localStorage.getItem("latitude");
     actualLongitude = localStorage.getItem("longitude");
     /*Parte slider*/
+    distanzaDaTe = document.getElementById("distanzaDaTe");
     slider = document.getElementById("myRange");
     output = document.getElementById("demo");
     slider.addEventListener("mouseup", function () {
-        console.log("hai alzato il mouse " + slider.value);
+        pulisciIntervallo();
+        removeAllPolygons();
         richiestaHTTPConDistanza(actualLatitude, actualLongitude, slider.value);
+        intervalID = setInterval(periodicalRequest, 5000);
         //qui andremo a fare una ricerca passando come valori distanza e coordinate
     });
     slider.oninput = function () {
-        output.innerHTML = slider.value;
+        output.innerHTML = slider.value + " KM";
     }
     /*Fine parte slider*/
     /**Inizio Parte selettori */
@@ -55,7 +55,7 @@ window.onload = function () {
 
 };
 //Parti delle Richieste
-function richiestaHTTPConDistanza(latitude, longitude, distance) {
+function richiestaHTTPConDistanza(latitude, longitude, distance, gravity) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
@@ -64,10 +64,20 @@ function richiestaHTTPConDistanza(latitude, longitude, distance) {
             visualizzareInMappa();
         }
     };
-    xhttp.open("GET", ConstructUrl.constructURLForReaserchWDistance(latitude, longitude, distance), true);
-    xhttp.send();
+    if (gravity == null) {
+        xhttp.open("GET", ConstructUrl.constructURLForReaserchWDistance(latitude, longitude, distance), true);
+        console.log(ConstructUrl.constructURLForReaserchWDistance(latitude, longitude, distance));
+        xhttp.send();
+    }
+    else {
+        xhttp.open("GET", ConstructUrl.constructURLForReaserchWDistanceWGravity(latitude, longitude, distance, gravity), true);
+        xhttp.send();
+
+    }
 
 }
+
+
 /**richiesta http per la selezione del posto */
 function richiestaProvinceComuni(tipoDiRicerca, codice) {
     var xhttp = new XMLHttpRequest();
@@ -97,7 +107,6 @@ function richiestaHTTPIncendiConComune(comune, gravity) {
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             // Typical action to be performed when the document is ready:
-            console.log(this.responseText);
             myJsonArr = JSON.parse(this.responseText);
             visualizzareInMappa();
         }
@@ -115,7 +124,7 @@ function richiestaHTTPIncendiConComune(comune, gravity) {
 
 
 }
-function periodicalRequest(){
+function periodicalRequest() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
@@ -126,7 +135,6 @@ function periodicalRequest(){
         }
     };
     xhttp.open("GET", ConstructUrl.getLastReaserch(), true);
-    console.log("sei dentro la periodical Request e questa è l'ultima search : \n"+ConstructUrl.getLastReaserch());
     xhttp.send();
 }
 //Fine Parti per le richieste
@@ -139,9 +147,10 @@ function visualizzareInMappa() {
     } else if (myJsonArr.length > 1) {
         for (let item in myJsonArr) {
             var reportingSquare = new ReportingSquare(parseFloat(myJsonArr[item].latitudine), parseFloat(myJsonArr[item].longitudine));
-            var cerchio=reportingSquare.createCircle100m(map);
+            var cerchio = reportingSquare.createCircle100m(map);
             objectReportingArray.push(cerchio);
         }
+        setZoom();
     }
     else {
         console.log("nessun incendio")
@@ -215,9 +224,10 @@ function provinciaSelezionata() {
 
 }
 function comuneSelezionato() {
+    pulisciIntervallo();
     removeAllPolygons();
     richiestaHTTPIncendiConComune(selettoreComune.value, null);
-    intervalID=setInterval(periodicalRequest,5000);
+    intervalID = setInterval(periodicalRequest, 5000);
     /**Qua vado a cercare gli incendi */
 
 }
@@ -256,11 +266,18 @@ function changeSelectors(tipoDiRicerca, listaPosti) {
 /**fine parte regione provincia comune */
 // cambiare i parametri di ricerca
 function changeResearchParamters() {
-    console.log("stai cercando di cambiare i parametri");
     if (contenitoreDiv.style.display === "none") {
         contenitoreDiv.style.display = "block";
+        slider.style.display = "none";
+        distanzaDaTe.style.display = "none";
+        output.style.display = "none";
     } else {
         contenitoreDiv.style.display = "none";
+        slider.style.display = "block";
+        output.style.display = "block";
+        distanzaDaTe.style.display = "block";
+
+
 
 
     }
@@ -273,4 +290,20 @@ function removeAllPolygons() {
     objectReportingArray = [];
 
 }
-//implementare un ischanged in caso di vedere se è cambiato l'array degli oggettti restituiti e nel caso aggiornare la mappa 
+//Stoppa la funzione Periodica
+function pulisciIntervallo() {
+    if (intervalID != null)
+        clearInterval(intervalID);
+}
+// settare uno zoom corretto
+function setZoom() { 
+    console.log("nel set Zoom");
+    var bounds = new google.maps.LatLngBounds();
+    for (var i=0;i<objectReportingArray.length;i++){
+        bounds.union(objectReportingArray[i].getBounds());
+    }
+    map.fitBounds(bounds);
+
+}
+//map.fitBounds(bounds);}
+//implementare un ischanged in caso di vedere se è cambiato l'array degli oggettti restituiti e nel caso aggiornare la mappa

@@ -19,12 +19,11 @@
     <div class="row m-4">
       <div class="col-xs-6 col-md-3">
         <div class="slidecontainer">
-          <p>Custom range slider:</p>
-          <input type="range" min="1" max="500" value="0" class="slider" id="myRange">
+          <p id="distanzaDaTe">Distanza da te:</p>
+          <input type="range" min="1" max="500" value="0" class="slider" id="myRange" style="display: none;">
           <p id="demo"></p>
         </div>
         <!-- selettori regione-->
-        <div id="bottone">Cambio criteri ricerca</div>
         <div id="contenitoreDiv">
           <div class="select m-1">
             <select name="slct" id="regione">
@@ -43,6 +42,7 @@
             </select>
           </div>
         </div>
+        <div id="bottone">Cambio criteri ricerca</div>
       </div>
       <div class="col-xs-6 col-md-6">
         <div id="map"></div>

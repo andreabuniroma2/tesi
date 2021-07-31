@@ -14,14 +14,10 @@ var contenitoreDiv;
 var selettoreRegione;
 var selettoreProvincia;
 var selettoreComune;
-window.initMap = function () {
-    map = new google.maps.Map(document.getElementById("map"), {
-        zoom: 5,
-        mapTypeId: "terrain",
-    });
-    getLocation();
-};
+
+
 window.onload = function () {
+
     // cambio di criteri di ricerca
     bottone = document.getElementById("bottone");
     bottone.addEventListener("click", changeResearchParamters);
@@ -53,6 +49,13 @@ window.onload = function () {
     selettoreComune.addEventListener("change", comuneSelezionato);
     /**FIne parte selettori */
 
+};
+window.initMap = function () {
+    map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 5,
+        mapTypeId: "terrain",
+    });
+    getLocation();
 };
 //Parti delle Richieste
 function richiestaHTTPConDistanza(latitude, longitude, distance, gravity) {

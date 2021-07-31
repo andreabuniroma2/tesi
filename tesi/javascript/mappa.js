@@ -104,6 +104,7 @@ function richiestaProvinceComuni(tipoDiRicerca, codice) {
 
     }
 }
+//ricerca incendi per comune provincia regione
 //ricerca incendi per comune
 function richiestaHTTPIncendiConComune(comune, gravity) {
     var xhttp = new XMLHttpRequest();
@@ -123,10 +124,48 @@ function richiestaHTTPIncendiConComune(comune, gravity) {
         xhttp.open("GET", ConstructUrl.constructURLForComunes(comune, gravity), true);
         xhttp.send();
     }
-
-
-
 }
+//ricerca incendi per provincia
+function richiestaHTTPIncendiConProvincia(province, gravity) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            // Typical action to be performed when the document is ready:
+            myJsonArr = JSON.parse(this.responseText);
+            visualizzareInMappa();
+        }
+    }
+    if (gravity == null) {
+        xhttp.open("GET", ConstructUrl.constructURLForProvinces(province), true);
+        console.log(ConstructUrl.constructURLForProvinces(province));
+        xhttp.send();
+    }
+    else {
+        xhttp.open("GET", ConstructUrl.constructURLForProvinces(province, gravity), true);
+        xhttp.send();
+    }
+}
+//ricerca incendi per regione
+function richiestaHTTPIncendiConRegione(regione, gravity) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            // Typical action to be performed when the document is ready:
+            myJsonArr = JSON.parse(this.responseText);
+            visualizzareInMappa();
+        }
+    }
+    if (gravity == null) {
+        xhttp.open("GET", ConstructUrl.constructURLForRegions(regione), true);
+        console.log(ConstructUrl.constructURLForRegions(regione));
+        xhttp.send();
+    }
+    else {
+        xhttp.open("GET", ConstructUrl.constructURLForRegions(regione, gravity), true);
+        xhttp.send();
+    }
+}
+// fine ricerca incendi provincia regione --------------------
 function periodicalRequest() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
@@ -220,9 +259,17 @@ function controlIfJSONChanged(obj1, obj2) {
 /*fine parte gestione dello slider*/
 /*Inizio parte funzioni Ricerca per regione,provincia, comune */
 function regioneSelezionata() {
+    pulisciIntervallo();
+    removeAllPolygons();
+    richiestaHTTPIncendiConRegione(selettoreRegione.value, null);
+    //intervalID = setInterval(periodicalRequest, 5000);
     richiestaProvinceComuni("province", selettoreRegione.value);
 }
 function provinciaSelezionata() {
+    pulisciIntervallo();
+    removeAllPolygons();
+    richiestaHTTPIncendiConProvincia(selettoreProvincia.value, null);
+    intervalID = setInterval(periodicalRequest, 5000);
     richiestaProvinceComuni("comuni", selettoreProvincia.value);
 
 }
@@ -257,7 +304,7 @@ function changeSelectors(tipoDiRicerca, listaPosti) {
                 // create text node to add to option element (opt)
                 opt.appendChild(document.createTextNode(listaPosti[i].nome));
                 // set value property of opt
-                opt.value = listaPosti[i].nome;
+                opt.value = listaPosti[i].id;
                 // add opt to end of select box (sel)
                 selettoreComune.appendChild(opt);
             }

@@ -1,5 +1,6 @@
 class ConstructUrl {
     static lastResearch;
+    static lastFunction;
     static constructURLForReaserchWDistance(latitude, longitude, distance) {
         return this.lastResearch = "http://localhost:8080/TesiRivelazioneIncendi/RicercaPerDistanza?latitude=" + latitude + "&longitude=" + longitude + "&distance=" + distance;
     }
@@ -25,7 +26,8 @@ class ConstructUrl {
             return this.lastResearch = "http://localhost:8080/TesiRivelazioneIncendi/RicercaPerComune?comune=" + comune + "&gravity=" + gravity;
     }
 
-    static constructURLForResources() {
+    static insertLastReaserch(ultimaRicerca) {
+        this.lastResearch=ultimaRicerca;
 
     }
     /**soltanto il ritorno delle liste delle regioni,comuni.province */

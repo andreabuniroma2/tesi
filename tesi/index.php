@@ -2,7 +2,7 @@
 <html>
 
 <head>
-<script type="module" src="javascript/mappa.js"></script>
+  <script type="module" src="javascript/mappa.js"></script>
   <link rel="stylesheet" type="text/css" href="css/indexStyle.css">
   <link rel="stylesheet" type="text/css" href="css/navbar_content.css">
   <link rel="stylesheet" type="text/css" href="css/slider.css">
@@ -26,20 +26,28 @@
         <div id="contenitoreDiv">
           <div class="select m-1">
             <select name="slct" id="regione">
-              <option selected disabled>Choose an option</option>
+              <option selected disabled>Regione</option>
               <?php require("selectorRegioni.php") ?>
             </select>
           </div>
-          <div class="select m-1" >
+          <div class="select m-1">
             <select name="slct" id="provincia">
-              <option selected disabled>Choose an option</option>
+              <option selected disabled>Provincia</option>
             </select>
           </div>
           <div class="select m-1">
             <select name="slct" id="comune">
-              <option selected disabled>Choose an option</option>
+              <option selected disabled>Comune</option>
             </select>
           </div>
+        </div>
+        <div class="select m-1">
+          <select name="slct" id="gravità">
+            <option selected disabled value="">Gravità</option>
+            <option value="moderata">moderata</option>
+            <option value="grave">grave</option>
+            <option value="catastrofica">catastrofica</option>
+          </select>
         </div>
         <div id="bottone">Cambio criteri ricerca</div>
       </div>

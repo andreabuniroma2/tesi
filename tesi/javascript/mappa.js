@@ -14,10 +14,13 @@ var contenitoreDiv;
 var selettoreRegione;
 var selettoreProvincia;
 var selettoreComune;
+var selettoreGravity;
 
 
 window.onload = function () {
-
+    //selettore della gravità
+    selettoreGravity = document.getElementById("gravità");
+    selettoreGravity.addEventListener("change",gravitàSelezionata);
     // cambio di criteri di ricerca
     bottone = document.getElementById("bottone");
     bottone.addEventListener("click", changeResearchParamters);
@@ -281,7 +284,9 @@ function comuneSelezionato() {
     /**Qua vado a cercare gli incendi */
 
 }
+function gravitàSelezionata(){
 
+}
 function changeSelectors(tipoDiRicerca, listaPosti) {
 
     switch (tipoDiRicerca) {
@@ -346,10 +351,10 @@ function pulisciIntervallo() {
         clearInterval(intervalID);
 }
 // settare uno zoom corretto
-function setZoom() { 
+function setZoom() {
     console.log("nel set Zoom");
     var bounds = new google.maps.LatLngBounds();
-    for (var i=0;i<objectReportingArray.length;i++){
+    for (var i = 0; i < objectReportingArray.length; i++) {
         bounds.union(objectReportingArray[i].getBounds());
     }
     map.fitBounds(bounds);

@@ -1,5 +1,12 @@
 import { ReportingSquare } from "./ReportingSquare.js"
 import { ConstructUrl } from "./ConstructURL.js"
+function initMap () {
+    map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 5,
+        mapTypeId: "terrain",
+    });
+    getLocation();
+};
 var intervalID; //id per la creazione delle richieste in loop
 var distanzaDaTe;
 var map;
@@ -18,6 +25,7 @@ var selettoreGravity;
 
 
 window.onload = function () {
+    initMap();
     //selettore della gravità
     selettoreGravity = document.getElementById("gravità");
     selettoreGravity.addEventListener("change",gravitàSelezionata);
@@ -53,15 +61,8 @@ window.onload = function () {
     /**FIne parte selettori */
 
 };
-window.initMap = function () {
-    map = new google.maps.Map(document.getElementById("map"), {
-        zoom: 5,
-        mapTypeId: "terrain",
-    });
-    getLocation();
-};
 //Parti delle Richieste
-function richiestaHTTPConDistanza(latitude, longitude, distance, gravity) {
+function richiestaHTTPConDistanza(latitude, longitude, distance) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
@@ -70,13 +71,13 @@ function richiestaHTTPConDistanza(latitude, longitude, distance, gravity) {
             visualizzareInMappa();
         }
     };
-    if (gravity == null) {
+    if (selettoreGravity.value == "" ) {
         xhttp.open("GET", ConstructUrl.constructURLForReaserchWDistance(latitude, longitude, distance), true);
         console.log(ConstructUrl.constructURLForReaserchWDistance(latitude, longitude, distance));
         xhttp.send();
     }
     else {
-        xhttp.open("GET", ConstructUrl.constructURLForReaserchWDistanceWGravity(latitude, longitude, distance, gravity), true);
+        xhttp.open("GET", ConstructUrl.constructURLForReaserchWDistanceWGravity(latitude, longitude, distance, selettoreGravity.value), true);
         xhttp.send();
 
     }
@@ -109,7 +110,7 @@ function richiestaProvinceComuni(tipoDiRicerca, codice) {
 }
 //ricerca incendi per comune provincia regione
 //ricerca incendi per comune
-function richiestaHTTPIncendiConComune(comune, gravity) {
+function richiestaHTTPIncendiConComune(comune) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
@@ -118,18 +119,18 @@ function richiestaHTTPIncendiConComune(comune, gravity) {
             visualizzareInMappa();
         }
     }
-    if (gravity == null) {
+    if (selettoreGravity.value == "") {
         xhttp.open("GET", ConstructUrl.constructURLForComunes(comune), true);
         console.log(ConstructUrl.constructURLForComunes(comune));
         xhttp.send();
     }
     else {
-        xhttp.open("GET", ConstructUrl.constructURLForComunes(comune, gravity), true);
+        xhttp.open("GET", ConstructUrl.constructURLForComunes(comune, selettoreGravity.value), true);
         xhttp.send();
     }
 }
 //ricerca incendi per provincia
-function richiestaHTTPIncendiConProvincia(province, gravity) {
+function richiestaHTTPIncendiConProvincia(province) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
@@ -138,18 +139,18 @@ function richiestaHTTPIncendiConProvincia(province, gravity) {
             visualizzareInMappa();
         }
     }
-    if (gravity == null) {
+    if (selettoreGravity.value == "" ) {
         xhttp.open("GET", ConstructUrl.constructURLForProvinces(province), true);
         console.log(ConstructUrl.constructURLForProvinces(province));
         xhttp.send();
     }
     else {
-        xhttp.open("GET", ConstructUrl.constructURLForProvinces(province, gravity), true);
+        xhttp.open("GET", ConstructUrl.constructURLForProvinces(province, selettoreGravity.value), true);
         xhttp.send();
     }
 }
 //ricerca incendi per regione
-function richiestaHTTPIncendiConRegione(regione, gravity) {
+function richiestaHTTPIncendiConRegione(regione) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
@@ -158,13 +159,13 @@ function richiestaHTTPIncendiConRegione(regione, gravity) {
             visualizzareInMappa();
         }
     }
-    if (gravity == null) {
+    if (selettoreGravity.value == "") {
         xhttp.open("GET", ConstructUrl.constructURLForRegions(regione), true);
         console.log(ConstructUrl.constructURLForRegions(regione));
         xhttp.send();
     }
     else {
-        xhttp.open("GET", ConstructUrl.constructURLForRegions(regione, gravity), true);
+        xhttp.open("GET", ConstructUrl.constructURLForRegions(regione, selettoreGravity.value), true);
         xhttp.send();
     }
 }
@@ -186,9 +187,11 @@ function periodicalRequest() {
 function visualizzareInMappa() {
 
     if (myJsonArr.length == 1) {
-        var reportingSquare = new ReportingSquare(parseFloat(myJsonArr.latitudine), parseFloat(myJsonArr.longitudine));
-        reportingSquare.createCircle1km().setMap(map);
-        objectReportingArray.push(reportingSquare);
+        console.log(myJsonArr[0]);
+        var reportingSquare = new ReportingSquare(parseFloat(myJsonArr[0].latitudine), parseFloat(myJsonArr[0].longitudine));
+        var cerchio = reportingSquare.createCircle100m(map);
+        objectReportingArray.push(cerchio);
+        setZoom();
     } else if (myJsonArr.length > 1) {
         for (let item in myJsonArr) {
             var reportingSquare = new ReportingSquare(parseFloat(myJsonArr[item].latitudine), parseFloat(myJsonArr[item].longitudine));
@@ -285,6 +288,12 @@ function comuneSelezionato() {
 
 }
 function gravitàSelezionata(){
+    pulisciIntervallo();
+    removeAllPolygons();
+    ConstructUrl.insertGravityToLastSearch(selettoreGravity.value);
+    periodicalRequest();
+    intervalID = setInterval(periodicalRequest, 5000);
+  
 
 }
 function changeSelectors(tipoDiRicerca, listaPosti) {

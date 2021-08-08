@@ -44,6 +44,7 @@
         <div class="select m-1">
           <select name="slct" id="gravità">
             <option selected disabled value="">Gravità</option>
+            <option  value="">Tutte</option>
             <option value="moderata">moderata</option>
             <option value="grave">grave</option>
             <option value="catastrofica">catastrofica</option>
@@ -68,8 +69,8 @@
       </p>
     </div>
   </div>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCoJlELjVyZrWhf4_oUrYNkmz7Q-kCDToQ&callback=initMap&libraries=&v=weekly" async></script>
   <script src="javascript/geolocalisation.js"></script>
+  <script  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCoJlELjVyZrWhf4_oUrYNkmz7Q-kCDToQ&libraries=&v=weekly"></script>
 </body>
 
 </html>

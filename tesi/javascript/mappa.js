@@ -1,6 +1,6 @@
 import { ReportingSquare } from "./ReportingSquare.js"
 import { ConstructUrl } from "./ConstructURL.js"
-function initMap () {
+function initMap() {
     map = new google.maps.Map(document.getElementById("map"), {
         zoom: 5,
         mapTypeId: "terrain",
@@ -28,7 +28,7 @@ window.onload = function () {
     initMap();
     //selettore della gravità
     selettoreGravity = document.getElementById("gravità");
-    selettoreGravity.addEventListener("change",gravitàSelezionata);
+    selettoreGravity.addEventListener("change", gravitàSelezionata);
     // cambio di criteri di ricerca
     bottone = document.getElementById("bottone");
     bottone.addEventListener("click", changeResearchParamters);
@@ -71,7 +71,7 @@ function richiestaHTTPConDistanza(latitude, longitude, distance) {
             visualizzareInMappa();
         }
     };
-    if (selettoreGravity.value == "" ) {
+    if (selettoreGravity.value == "") {
         xhttp.open("GET", ConstructUrl.constructURLForReaserchWDistance(latitude, longitude, distance), true);
         console.log(ConstructUrl.constructURLForReaserchWDistance(latitude, longitude, distance));
         xhttp.send();
@@ -139,7 +139,7 @@ function richiestaHTTPIncendiConProvincia(province) {
             visualizzareInMappa();
         }
     }
-    if (selettoreGravity.value == "" ) {
+    if (selettoreGravity.value == "") {
         xhttp.open("GET", ConstructUrl.constructURLForProvinces(province), true);
         console.log(ConstructUrl.constructURLForProvinces(province));
         xhttp.send();
@@ -177,7 +177,9 @@ function periodicalRequest() {
             // Typical action to be performed when the document is ready:
             myJsonArr = JSON.parse(this.responseText);
             removeAllPolygons();
-            visualizzareInMappa();
+            visualizzareInMappaNoZoom();
+            console.log("periodical requ");
+
         }
     };
     xhttp.open("GET", ConstructUrl.getLastReaserch(), true);
@@ -199,6 +201,23 @@ function visualizzareInMappa() {
             objectReportingArray.push(cerchio);
         }
         setZoom();
+    }
+    else {
+        console.log("nessun incendio")
+    }
+}
+function visualizzareInMappaNoZoom() {
+    if (myJsonArr.length == 1) {
+        console.log(myJsonArr[0]);
+        var reportingSquare = new ReportingSquare(parseFloat(myJsonArr[0].latitudine), parseFloat(myJsonArr[0].longitudine));
+        var cerchio = reportingSquare.createCircle100m(map);
+        objectReportingArray.push(cerchio);
+    } else if (myJsonArr.length > 1) {
+        for (let item in myJsonArr) {
+            var reportingSquare = new ReportingSquare(parseFloat(myJsonArr[item].latitudine), parseFloat(myJsonArr[item].longitudine));
+            var cerchio = reportingSquare.createCircle100m(map);
+            objectReportingArray.push(cerchio);
+        }
     }
     else {
         console.log("nessun incendio")
@@ -268,7 +287,7 @@ function regioneSelezionata() {
     pulisciIntervallo();
     removeAllPolygons();
     richiestaHTTPIncendiConRegione(selettoreRegione.value, null);
-    //intervalID = setInterval(periodicalRequest, 5000);
+    intervalID = setInterval(periodicalRequest, 5000);
     richiestaProvinceComuni("province", selettoreRegione.value);
 }
 function provinciaSelezionata() {
@@ -287,13 +306,13 @@ function comuneSelezionato() {
     /**Qua vado a cercare gli incendi */
 
 }
-function gravitàSelezionata(){
+function gravitàSelezionata() {
     pulisciIntervallo();
     removeAllPolygons();
     ConstructUrl.insertGravityToLastSearch(selettoreGravity.value);
     periodicalRequest();
     intervalID = setInterval(periodicalRequest, 5000);
-  
+
 
 }
 function changeSelectors(tipoDiRicerca, listaPosti) {

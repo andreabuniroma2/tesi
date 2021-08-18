@@ -178,8 +178,6 @@ function periodicalRequest() {
             myJsonArr = JSON.parse(this.responseText);
             removeAllPolygons();
             visualizzareInMappaNoZoom();
-            console.log("periodical requ");
-
         }
     };
     xhttp.open("GET", ConstructUrl.getLastReaserch(), true);
@@ -187,18 +185,25 @@ function periodicalRequest() {
 }
 //Fine Parti per le richieste
 function visualizzareInMappa() {
-
+    console.log(myJsonArr);
     if (myJsonArr.length == 1) {
         console.log(myJsonArr[0]);
-        var reportingSquare = new ReportingSquare(parseFloat(myJsonArr[0].latitudine), parseFloat(myJsonArr[0].longitudine));
+        var reportingSquare = new ReportingSquare(parseFloat(myJsonArr[0].latitudine), parseFloat(myJsonArr[0].longitudine), myJsonArr[0].idincendio, myJsonArr[0].gravita);
         var cerchio = reportingSquare.createCircle100m(map);
+        google.maps.event.addListener(cerchio, 'click', function (evt) {
+            console.log(cerchio.id);
+        })
         objectReportingArray.push(cerchio);
         setZoom();
     } else if (myJsonArr.length > 1) {
         for (let item in myJsonArr) {
-            var reportingSquare = new ReportingSquare(parseFloat(myJsonArr[item].latitudine), parseFloat(myJsonArr[item].longitudine));
+            var reportingSquare = new ReportingSquare(parseFloat(myJsonArr[item].latitudine), parseFloat(myJsonArr[item].longitudine), myJsonArr[item].idincendio, myJsonArr[item].gravita);
             var cerchio = reportingSquare.createCircle100m(map);
             objectReportingArray.push(cerchio);
+            google.maps.event.addListener(cerchio, 'click', function (evt) {
+                goToEvolution(cerchio.id);
+
+            })
         }
         setZoom();
     }
@@ -209,14 +214,17 @@ function visualizzareInMappa() {
 function visualizzareInMappaNoZoom() {
     if (myJsonArr.length == 1) {
         console.log(myJsonArr[0]);
-        var reportingSquare = new ReportingSquare(parseFloat(myJsonArr[0].latitudine), parseFloat(myJsonArr[0].longitudine));
+        var reportingSquare = new ReportingSquare(parseFloat(myJsonArr[0].latitudine), parseFloat(myJsonArr[0].longitudine), myJsonArr[0].idincendio, myJsonArr[0].gravita);
         var cerchio = reportingSquare.createCircle100m(map);
         objectReportingArray.push(cerchio);
     } else if (myJsonArr.length > 1) {
         for (let item in myJsonArr) {
-            var reportingSquare = new ReportingSquare(parseFloat(myJsonArr[item].latitudine), parseFloat(myJsonArr[item].longitudine));
+            var reportingSquare = new ReportingSquare(parseFloat(myJsonArr[item].latitudine), parseFloat(myJsonArr[item].longitudine), myJsonArr[item].idincendio, myJsonArr[item].gravita);
             var cerchio = reportingSquare.createCircle100m(map);
             objectReportingArray.push(cerchio);
+            google.maps.event.addListener(cerchio, 'click', function (evt) {
+                goToEvolution(cerchio.id);
+            })
         }
     }
     else {
@@ -329,6 +337,8 @@ function changeSelectors(tipoDiRicerca, listaPosti) {
                 // add opt to end of select box (sel)
                 selettoreProvincia.appendChild(opt);
             }
+            selettoreComune.innerHTML = "<option>Comune</option>";
+
             break;
         case 'comuni':
             selettoreComune.innerHTML = '';
@@ -390,3 +400,8 @@ function setZoom() {
 }
 //map.fitBounds(bounds);}
 //implementare un ischanged in caso di vedere se è cambiato l'array degli oggettti restituiti e nel caso aggiornare la mappa
+// vai alla pagina delle evoluzioni
+function goToEvolution(idincendio) {
+    console.log(idincendio)
+    window.open("evolution.php?idincendio=" + idincendio);
+}

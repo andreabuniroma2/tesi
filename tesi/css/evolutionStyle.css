@@ -1,0 +1,20 @@
+
+/* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+       #map {
+        border-radius: 4px;
+        box-sizing: border-box;
+        height: 600px;
+        background-color: #303030;
+        /* The height is 400 pixels */
+        width: 100%;
+        margin: auto;
+        z-index: 0;      }
+      
+      /* Optional: Makes the sample page fill the window. */
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }

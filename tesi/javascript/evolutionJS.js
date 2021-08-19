@@ -75,9 +75,7 @@ function setZoom() {
 
 }
 function orderResult(){
-  for (let item in objectReportingArray){
-    console.log(objectReportingArray[item].dateHour);
-  }
+  if(objectReportingArray[0].dateHour !=null){
   objectReportingArray.sort(function(a,b){
     // Turn your strings into dates, and then subtract them
     // to get a value that is either negative, positive, or zero.
@@ -86,6 +84,7 @@ function orderResult(){
   for (let item in objectReportingArray){
     console.log(objectReportingArray[item].dateHour);
   }
+}
 }
 // Classe Cerchio ReportingSquare che crea gli oggetti cerchio
 class ReportingSquare {
@@ -164,7 +163,6 @@ setZoom();
   // Sleep in loop
   for (let i = 0; i < objectReportingArray.length; i++) {
     objectReportingArray[i].setMap(map);
-    console.log(objectReportingArray[i].dateHour+" ciclo:"+i);
     await sleep(2000);
     if (i === objectReportingArray.length-1){
       for (let item in objectReportingArray){

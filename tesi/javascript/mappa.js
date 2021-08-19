@@ -7,6 +7,11 @@ function initMap() {
     });
     getLocation();
 };
+var addListenersOnPolygon = function(polygon) {
+    google.maps.event.addListener(polygon, 'click', function (ev) {
+      goToEvolution(polygon.id);
+    });  
+  }
 var intervalID; //id per la creazione delle richieste in loop
 var distanzaDaTe;
 var map;
@@ -115,6 +120,8 @@ function richiestaHTTPIncendiConComune(comune) {
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             // Typical action to be performed when the document is ready:
+            removeAllPolygons();
+
             myJsonArr = JSON.parse(this.responseText);
             visualizzareInMappa();
         }
@@ -135,6 +142,7 @@ function richiestaHTTPIncendiConProvincia(province) {
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             // Typical action to be performed when the document is ready:
+            removeAllPolygons();
             myJsonArr = JSON.parse(this.responseText);
             visualizzareInMappa();
         }
@@ -155,8 +163,9 @@ function richiestaHTTPIncendiConRegione(regione) {
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             // Typical action to be performed when the document is ready:
+            removeAllPolygons();
             myJsonArr = JSON.parse(this.responseText);
-            visualizzareInMappa();
+                        visualizzareInMappa();
         }
     }
     if (selettoreGravity.value == "") {
@@ -190,9 +199,6 @@ function visualizzareInMappa() {
         console.log(myJsonArr[0]);
         var reportingSquare = new ReportingSquare(parseFloat(myJsonArr[0].latitudine), parseFloat(myJsonArr[0].longitudine), myJsonArr[0].idincendio, myJsonArr[0].gravita);
         var cerchio = reportingSquare.createCircle100m(map);
-        google.maps.event.addListener(cerchio, 'click', function (evt) {
-            console.log(cerchio.id);
-        })
         objectReportingArray.push(cerchio);
         setZoom();
     } else if (myJsonArr.length > 1) {
@@ -200,10 +206,7 @@ function visualizzareInMappa() {
             var reportingSquare = new ReportingSquare(parseFloat(myJsonArr[item].latitudine), parseFloat(myJsonArr[item].longitudine), myJsonArr[item].idincendio, myJsonArr[item].gravita);
             var cerchio = reportingSquare.createCircle100m(map);
             objectReportingArray.push(cerchio);
-            google.maps.event.addListener(cerchio, 'click', function (evt) {
-                goToEvolution(cerchio.id);
-
-            })
+            addListenersOnPolygon(cerchio);
         }
         setZoom();
     }
@@ -222,9 +225,7 @@ function visualizzareInMappaNoZoom() {
             var reportingSquare = new ReportingSquare(parseFloat(myJsonArr[item].latitudine), parseFloat(myJsonArr[item].longitudine), myJsonArr[item].idincendio, myJsonArr[item].gravita);
             var cerchio = reportingSquare.createCircle100m(map);
             objectReportingArray.push(cerchio);
-            google.maps.event.addListener(cerchio, 'click', function (evt) {
-                goToEvolution(cerchio.id);
-            })
+            addListenersOnPolygon(cerchio);
         }
     }
     else {
@@ -402,6 +403,5 @@ function setZoom() {
 //implementare un ischanged in caso di vedere se è cambiato l'array degli oggettti restituiti e nel caso aggiornare la mappa
 // vai alla pagina delle evoluzioni
 function goToEvolution(idincendio) {
-    console.log(idincendio)
     window.open("evolution.php?idincendio=" + idincendio);
 }

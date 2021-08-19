@@ -54,6 +54,7 @@ function storeResults() {
     visualizzaEvoluzione();
   } else if (myJsonArr.length > 1) {
     for (let item in myJsonArr) {
+      console.log(myJsonArr[item].gravita);
       var reportingSquare = new ReportingSquare(parseFloat(myJsonArr[item].latitudine), parseFloat(myJsonArr[item].longitudine), myJsonArr[item].idincendio, myJsonArr[item].gravita,myJsonArr[item].dataora);
       var cerchio = reportingSquare.createCircle100m(map);
       objectReportingArray.push(cerchio);
@@ -163,7 +164,7 @@ setZoom();
   // Sleep in loop
   for (let i = 0; i < objectReportingArray.length; i++) {
     objectReportingArray[i].setMap(map);
-    await sleep(2000);
+    await sleep(1500);
     if (i === objectReportingArray.length-1){
       for (let item in objectReportingArray){
         objectReportingArray[item].setMap(null);

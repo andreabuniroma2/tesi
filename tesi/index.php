@@ -55,7 +55,7 @@
       <div class="col-xs-6 col-md-6">
         <div id="map"></div>
       </div>
-      <div class="col-xs-6 col-md-3">lista incendi</div>
+      <div class="col-xs-6 col-md-3"> </div>
 
     </div>
   </div>

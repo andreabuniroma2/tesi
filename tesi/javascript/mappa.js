@@ -328,7 +328,7 @@ function changeSelectors(tipoDiRicerca, listaPosti) {
 
     switch (tipoDiRicerca) {
         case 'province':
-            selettoreProvincia.innerHTML = '';
+            selettoreProvincia.innerHTML = '<option selected disabled value="">Provincia</option>';
             for (let i in listaPosti) {
                 var opt = document.createElement('option');
                 // create text node to add to option element (opt)
@@ -342,7 +342,7 @@ function changeSelectors(tipoDiRicerca, listaPosti) {
 
             break;
         case 'comuni':
-            selettoreComune.innerHTML = '';
+            selettoreComune.innerHTML = '<option selected disabled value="">Comune</option>';
             for (let i in listaPosti) {
                 var opt = document.createElement('option');
                 // create text node to add to option element (opt)

@@ -12,10 +12,10 @@ class ReportingSquare {
         this.color = '#FF0000';
         break;
       case 'grave':
-        this.color = "#FFFF00";
+        this.color = "#FF8000";
         break;
       case 'moderata':
-        this.color = ' #008000';
+        this.color = ' #FFFF00';
         break;
       default:
         this.color = '#FF0000';

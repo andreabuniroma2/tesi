@@ -197,13 +197,15 @@ function visualizzareInMappa() {
     console.log(myJsonArr);
     if (myJsonArr.length == 1) {
         console.log(myJsonArr[0]);
-        var reportingSquare = new ReportingSquare(parseFloat(myJsonArr[0].latitudine), parseFloat(myJsonArr[0].longitudine), myJsonArr[0].idincendio, myJsonArr[0].gravita);
+        var reportingSquare = new ReportingSquare(parseFloat(myJsonArr[0].latitudine), parseFloat(myJsonArr[0].longitudine), 
+        myJsonArr[0].idincendio, myJsonArr[0].gravita);
         var cerchio = reportingSquare.createCircle100m(map);
         objectReportingArray.push(cerchio);
         setZoom();
     } else if (myJsonArr.length > 1) {
         for (let item in myJsonArr) {
-            var reportingSquare = new ReportingSquare(parseFloat(myJsonArr[item].latitudine), parseFloat(myJsonArr[item].longitudine), myJsonArr[item].idincendio, myJsonArr[item].gravita);
+            var reportingSquare = new ReportingSquare(parseFloat(myJsonArr[item].latitudine), parseFloat(myJsonArr[item].longitudine),
+             myJsonArr[item].idincendio, myJsonArr[item].gravita);
             var cerchio = reportingSquare.createCircle100m(map);
             objectReportingArray.push(cerchio);
             addListenersOnPolygon(cerchio);

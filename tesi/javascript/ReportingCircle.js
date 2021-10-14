@@ -1,4 +1,4 @@
-class ReportingSquare {
+class ReportingCircle {
 
   latlng;
   idincendio;
@@ -63,5 +63,5 @@ class ReportingSquare {
     return this.cerchio;
   }
 }
-export { ReportingSquare }
+export { ReportingCircle }
 

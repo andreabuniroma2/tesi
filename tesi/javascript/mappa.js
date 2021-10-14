@@ -1,4 +1,4 @@
-import { ReportingSquare } from "./ReportingSquare.js"
+import { ReportingCircle } from "./ReportingCircle.js"
 import { ConstructUrl } from "./ConstructURL.js"
 function initMap() {
     map = new google.maps.Map(document.getElementById("map"), {
@@ -197,16 +197,16 @@ function visualizzareInMappa() {
     console.log(myJsonArr);
     if (myJsonArr.length == 1) {
         console.log(myJsonArr[0]);
-        var reportingSquare = new ReportingSquare(parseFloat(myJsonArr[0].latitudine), parseFloat(myJsonArr[0].longitudine), 
+        var reportingCircle = new ReportingCircle(parseFloat(myJsonArr[0].latitudine), parseFloat(myJsonArr[0].longitudine), 
         myJsonArr[0].idincendio, myJsonArr[0].gravita);
-        var cerchio = reportingSquare.createCircle100m(map);
+        var cerchio = reportingCircle.createCircle100m(map);
         objectReportingArray.push(cerchio);
         setZoom();
     } else if (myJsonArr.length > 1) {
         for (let item in myJsonArr) {
-            var reportingSquare = new ReportingSquare(parseFloat(myJsonArr[item].latitudine), parseFloat(myJsonArr[item].longitudine),
+            var reportingCircle = new ReportingCircle(parseFloat(myJsonArr[item].latitudine), parseFloat(myJsonArr[item].longitudine),
              myJsonArr[item].idincendio, myJsonArr[item].gravita);
-            var cerchio = reportingSquare.createCircle100m(map);
+            var cerchio = reportingCircle.createCircle100m(map);
             objectReportingArray.push(cerchio);
             addListenersOnPolygon(cerchio);
         }
@@ -219,13 +219,13 @@ function visualizzareInMappa() {
 function visualizzareInMappaNoZoom() {
     if (myJsonArr.length == 1) {
         console.log(myJsonArr[0]);
-        var reportingSquare = new ReportingSquare(parseFloat(myJsonArr[0].latitudine), parseFloat(myJsonArr[0].longitudine), myJsonArr[0].idincendio, myJsonArr[0].gravita);
-        var cerchio = reportingSquare.createCircle100m(map);
+        var reportingCircle = new ReportingCircle(parseFloat(myJsonArr[0].latitudine), parseFloat(myJsonArr[0].longitudine), myJsonArr[0].idincendio, myJsonArr[0].gravita);
+        var cerchio = reportingCircle.createCircle100m(map);
         objectReportingArray.push(cerchio);
     } else if (myJsonArr.length > 1) {
         for (let item in myJsonArr) {
-            var reportingSquare = new ReportingSquare(parseFloat(myJsonArr[item].latitudine), parseFloat(myJsonArr[item].longitudine), myJsonArr[item].idincendio, myJsonArr[item].gravita);
-            var cerchio = reportingSquare.createCircle100m(map);
+            var reportingCircle = new ReportingCircle(parseFloat(myJsonArr[item].latitudine), parseFloat(myJsonArr[item].longitudine), myJsonArr[item].idincendio, myJsonArr[item].gravita);
+            var cerchio = reportingCircle.createCircle100m(map);
             objectReportingArray.push(cerchio);
             addListenersOnPolygon(cerchio);
         }
